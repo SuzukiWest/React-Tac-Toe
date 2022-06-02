@@ -11,6 +11,7 @@ function Square(props) {
 }
 
 class Board extends React.Component {
+ 
   renderSquare(i) {
     return (
       <Square
@@ -21,6 +22,7 @@ class Board extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <div className="board-row">
@@ -71,7 +73,8 @@ class Game extends React.Component {
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+    //Altered to return winner and winning line positions
+    const winner= calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
       const desc = move ? "Go to move #" + move : "Go to game start";
@@ -87,13 +90,14 @@ class Game extends React.Component {
       //status = 'Winner: ' + winner;
       //Winner Modal popup here
       return (
-        <div className="gameOver">
-          <div className="winnerTitle">
+        <div className="game-over">
+          <div className="winner-title">
 {/*             onClick needs to be on lowest level child for it to work
  */}            <WinnerModal winner={winner} onClick={this.handleReset} />
           </div>
           <div className="winning-board">
-            <Board squares={current.squares} onClick={this.handleReset} />
+{/*             TODO alter Board to have line blocks outlined
+ */}            <Board squares={current.squares} onClick={this.handleReset} />
           </div>
         </div>
       );
@@ -169,7 +173,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a,b,c];
+      return squares[a];
     }
   }
   return null;
